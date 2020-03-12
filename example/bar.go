@@ -1,11 +1,10 @@
 package main
 
 import (
+	"github.com/KPMTechnologies/go-echarts/charts"
 	"log"
 	"net/http"
 	"os"
-
-	"github.com/go-echarts/go-echarts/charts"
 )
 
 func barBase() *charts.Bar {
