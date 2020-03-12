@@ -4,10 +4,17 @@ type seriesOptser interface {
 	markSeries()
 }
 
+type LabelTextOptsRich struct {
+
+}
+
 // LabelTextOpts contains options for a label text.
 type LabelTextOpts struct {
 	// 是否显示标签
 	Show bool `json:"show"`
+
+	Rich LabelTextOptsRich `json:"rich"`
+	
 	// 文字的颜色
 	Color string `json:"color,omitempty"`
 	// 标签的位置
@@ -190,10 +197,17 @@ type ItemStyleOpts struct {
 	// 图形的描边颜色
 	// Kline 途中为 阳线图形的描边颜色
 	BorderColor string `json:"borderColor,omitempty"`
+
+	BorderWidth string `json:"barBorderWidth,omitempty"`
 	// Kline 途中为 阴线图形的描边颜色
 	BorderColor0 string `json:"borderColor0,omitempty"`
 	// 图形透明度。支持从 0 到 1 的数字，为 0 时不绘制该图形
 	Opacity float32 `json:"opacity,omitempty"`
+
+	ShadowColor string `json:"shadowColor,omitempty"`
+
+	ShadowBlur int `json:"shadowBlur,omitempty"`
+
 }
 
 func (ItemStyleOpts) markSeries() {}

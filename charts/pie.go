@@ -1,8 +1,11 @@
 package charts
 
 import (
-	"github.com/go-echarts/go-echarts/datatypes"
+	"bytes"
+	"fmt"
+	"github.com/KPMTechnologies/go-echarts/datatypes"
 	"io"
+	"strings"
 )
 
 // Pie represents a pie chart.
@@ -78,4 +81,18 @@ func (c *Pie) Render(w ...io.Writer) error {
 	c.insertSeriesColors(c.appendColor)
 	c.validateOpts()
 	return renderToWriter(c, "chart", []string{}, w...)
+}
+
+func (c *Pie) GetTableData() string {
+	buf := new(bytes.Buffer)
+	c.Render(buf)
+	str := buf.String()
+	str = fmt.Sprintf("%s", str)
+	str = strings.Replace(str, `<script type="text/javascript">`, `` , -1)
+	str = strings.Replace(str, `</script>`, `` , -1)
+	str = strings.Replace(str, `\r`, `` , -1)
+	//str = strings.Replace(str, `\n`, `` , -1)
+	str = strings.ReplaceAll(str, `,}`, `}`)
+	str = strings.ReplaceAll(str, `,],`, `],`)
+	return str
 }

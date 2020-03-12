@@ -1,7 +1,10 @@
 package charts
 
 import (
+	"bytes"
+	"fmt"
 	"io"
+	"strings"
 )
 
 // Bar represents a bar chart.
@@ -60,8 +63,8 @@ func (c *Bar) AddXAxis(xAxis interface{}) *Bar {
 }
 
 // AddYAxis adds the Y axis.
-func (c *Bar) AddYAxis(name string, yAxis interface{}, options ...seriesOptser) *Bar {
-	series := singleSeries{Name: name, Type: ChartType.Bar, Data: yAxis}
+func (c *Bar) AddYAxis(name string, yAxis interface{}, chartType string,options ...seriesOptser) *Bar {
+	series := singleSeries{Name: name, Type: chartType, Data: yAxis}
 	series.setSingleSeriesOpts(options...)
 	c.Series = append(c.Series, series)
 	c.setColor(options...)
@@ -93,4 +96,17 @@ func (c *Bar) Render(w ...io.Writer) error {
 	c.insertSeriesColors(c.appendColor)
 	c.validateOpts()
 	return renderToWriter(c, "chart", []string{}, w...)
+}
+func (c *Bar) GetTableData() string {
+	buf := new(bytes.Buffer)
+	c.Render(buf)
+	str := buf.String()
+	str = fmt.Sprintf("%s", str)
+	str = strings.Replace(str, `<script type="text/javascript">`, `` , -1)
+	str = strings.Replace(str, `</script>`, `` , -1)
+	str = strings.Replace(str, `\r`, `` , -1)
+	str = strings.Replace(str, `\n`, `` , -1)
+	str = strings.ReplaceAll(str, `,}`, `}`)
+	str = strings.ReplaceAll(str, `,],`, `],`)
+	return str
 }

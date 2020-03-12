@@ -45,6 +45,8 @@ type LegendOpts struct {
 	// 也可以是 'left', 'center', 'right'。
 	// 如果 left 的值为'left', 'center', 'right'，组件会根据相应的位置自动对齐。
 	Left string `json:"left,omitempty"`
+
+	Show bool `json:"show,omitempty"`
 	// 图例组件离容器上侧的距离。
 	// top 的值可以是像 20 这样的具体像素值，可以是像 '20%' 这样相对于容器高宽的百分比
 	// 也可以是 'top', 'middle', 'bottom'。
@@ -265,6 +267,11 @@ type SplitAreaOpts struct {
 }
 
 // SplitLineOpts is the option set for a split line.
+type AxisLineOpts struct {
+	Show bool `json:"show"`
+}
+
+// SplitLineOpts is the option set for a split line.
 type SplitLineOpts struct {
 	// 是否显示分隔线
 	Show bool `json:"show"`
@@ -363,7 +370,9 @@ type YAxisOpts struct {
 	// Y 轴在 grid 区域中的分隔区域配置项
 	SplitArea SplitAreaOpts `json:"splitArea,omitempty"`
 	// Y 轴在 grid 区域中的分隔线配置项
-	SplitLine SplitLineOpts `json:"splitLine,,omitempty"`
+	SplitLine SplitLineOpts `json:"splitLine,omitempty"`
+
+	AxisLine AxisLineOpts `json:"axisLine,omitempty"`
 }
 
 func (YAxisOpts) markGlobal() {}
