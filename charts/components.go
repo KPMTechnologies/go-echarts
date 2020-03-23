@@ -71,8 +71,15 @@ type LegendOpts struct {
 
 func (LegendOpts) markGlobal() {}
 
+type AxisPointerOpts struct {
+	Type string `json:"type,omitempty"`
+}
+
 // TooltipOpts is the option set for a tooltip component.
 type TooltipOpts struct {
+
+	AxisPointer AxisPointerOpts `json:"axisPointer,omitempty"`
+
 	// 是否显示提示框
 	Show bool `json:"show,omitempty"`
 	// 触发类型。
@@ -316,6 +323,8 @@ type XAxisOpts struct {
 	SplitArea SplitAreaOpts `json:"splitArea,omitempty"`
 	// X 轴在 grid 区域中的分隔线配置项
 	SplitLine SplitLineOpts `json:"splitLine,,omitempty"`
+
+	AxisLine AxisLineOpts `json:"axisLine,omitempty"`
 }
 
 func (XAxisOpts) markGlobal() {}
